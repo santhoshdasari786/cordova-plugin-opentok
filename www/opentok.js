@@ -393,6 +393,7 @@ TBPublisher = (function() {
   };
 
   TBPublisher.prototype.eventReceived = function(response) {
+  // pdebug("creating eventReceived", JSON.stringify(response));
     return this[response.eventType](response.data);
   };
 
@@ -467,6 +468,14 @@ TBPublisher = (function() {
     var streamEvent;
     streamEvent = new TBEvent("audioLevelUpdated");
     streamEvent.audioLevel = event.audioLevel;
+    this.dispatchEvent(streamEvent);
+    return this;
+  };
+
+  TBPublisher.prototype.cameraError = function(event) {
+    var streamEvent;
+    streamEvent = new TBEvent("cameraError");
+    streamEvent.audioLevel = event;
     this.dispatchEvent(streamEvent);
     return this;
   };
