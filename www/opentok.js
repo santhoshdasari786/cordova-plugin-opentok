@@ -725,6 +725,7 @@ TBSession = (function() {
     this.resetElement = __bind(this.resetElement, this);
     this.publish = __bind(this.publish, this);
     this.publish = __bind(this.publish, this);
+    this.connectionError = __bind(this.connectionError, this);
     this.apiKey = this.apiKey.toString();
     this.connections = {};
     this.streams = {};
@@ -733,6 +734,14 @@ TBSession = (function() {
     OT.getHelper().eventing(this);
     Cordova.exec(TBSuccess, TBSuccess, OTPlugin, "initSession", [this.apiKey, this.sessionId]);
   }
+  
+  TBSession.prototype.connectionError = function(event) {
+    var errormsg ;
+    errormsg = new TBEvent("connectionError");
+    errormsg.msg = event.sessionerror;
+    this.dispatchEvent(errormsg);
+    return this;
+  };
 
   TBSession.prototype.cleanUpDom = function() {
     var e, objects, _results;
